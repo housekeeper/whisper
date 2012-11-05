@@ -1,0 +1,13 @@
+development:
+    adapter: postgresql
+    encoding: utf8
+    pool: 5
+    timeout: 5000
+    username: lewashby
+    password: 
+    host: localhost
+    database: whisper_development
+
+
+# DATABASE URL
+# postgres://username:password@host/database_name
