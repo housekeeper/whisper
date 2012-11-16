@@ -1,6 +1,8 @@
 class CreateWhisperChats < ActiveRecord::Migration
   def change
     create_table :whisper_chats do |t|
+      t.references :user
+
       t.string   :from
       t.string   :to
       t.string   :message
@@ -9,6 +11,7 @@ class CreateWhisperChats < ActiveRecord::Migration
 
     add_index :whisper_chats, :from
     add_index :whisper_chats, :to
+    add_index :whisper_chats, :user_id
 
   end
 end

@@ -10,17 +10,15 @@ Gem::Specification.new do |s|
   s.authors     = ["Carl Burton, David Alphen"]
   s.email       = ["carl@house-keeping.com, david.alphen@gmail.com"]
   s.homepage    = ""
-  s.summary     = "Whisper is a simple chat gem that allows you to chat with users within an existing application."
-  s.description = "Whisper is a simple chat gem that allows you to chat with users within an existing application."
+  s.summary     = "Whisper allows you to chat with users within an existing application."
+  s.description = "Whisper allows you to chat with users within an existing application."
 
   s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 3.2.8"
-  s.add_dependency "paper_trail"
   s.add_dependency "pusher"
-  
-  # s.add_dependency "jquery-rails"
+  s.add_dependency "jquery-rails"
 
   s.add_development_dependency "sqlite3"
 end
