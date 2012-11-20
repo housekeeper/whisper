@@ -11,31 +11,6 @@ Please see http://www.pusher.com and create an account (it is free).
 
 ## Installation for Rails 3.1 and above
 
-### Devise install
-
-Add the gem to your Gemfile
-
-``` ruby
-gem 'devise', '~> 2.1.2'
-rails generate devise:install
-rails generate devise User
-```
-
-Edit the migration file and add two fields:
-
-``` ruby
-t.string :name
-t.string :username
-```
-
-And then migrate
-
-``` ruby
-rake db:migrate
-```
-
-### Whisper install
-
 Add the gem to your Gemfile
 
 ``` ruby
