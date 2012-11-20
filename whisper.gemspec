@@ -20,5 +20,4 @@ Gem::Specification.new do |s|
   s.add_dependency "pusher"
   s.add_dependency "jquery-rails"
 
-  s.add_development_dependency "sqlite3"
 end
