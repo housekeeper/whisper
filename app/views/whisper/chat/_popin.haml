@@ -1,0 +1,12 @@
+:javascript
+
+  var currentUserId = "#{userid}";
+  var pusher = new Pusher("e77c8d27f667516177f3", { encrypted: true })
+  privateUserChannel = pusher.subscribe("private-user-channel-" + currentUserId);
+
+  privateUserChannel.bind('send-user-message', function(data) {
+    $("#chatbox_" + data.to).children(".chatboxcontent").append("<div class='chatboxmessage'><span class='chatboxmessagefrom'>" + data.from + ' <em>whispered to ' + data.to + " </em>: </span><span class='chatboxmessagecontent_whisper'>" + data.message + "</span></div>");
+    console.log("An event was triggered with message: " + data.message);
+  });
+
+  chatWith("#{username}");
