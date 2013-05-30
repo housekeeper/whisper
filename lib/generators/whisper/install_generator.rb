@@ -7,10 +7,10 @@ module Whisper
       class_option "current-user-helper", :type => :string
 
       source_root File.expand_path("../install/templates", __FILE__)
-      desc "Used to install Whisper"
+      desc "Used to install whisper"
 
       def install_migrations
-        puts "Copying over Whisper migrations..."
+        puts "Copying over whisper migrations..."
         Dir.chdir(Rails.root) do
           `rake whisper:install:migrations`
         end
@@ -69,7 +69,7 @@ module Whisper
       end
 
       def mount_engine
-        puts "Mounting Whisper::Engine at \"/whisper\" in config/routes.rb..."
+        puts "Mounting whisper::Engine at \"/whisper\" in config/routes.rb..."
         insert_into_file("#{Rails.root}/config/routes.rb", :after => /routes.draw.do\n/) do
           %Q{  mount Whisper::Engine, :at => "/whisper"\n}
         end
@@ -77,17 +77,15 @@ module Whisper
 
       def finished
         output = "\n\n" + ("*" * 53)
-        output += %Q{\nDone! Whisper has been successfully installed. Yaaaaay!
+        output += %Q{\nDone! whisper has been successfully installed. Yaaaaay!
 
 Here's what happened:\n\n}
 
-        output += step("Whisper's migrations were copied over into db/migrate.\n")
-        output += step("We created a new migration called AddWhisperAdminToTable.
-   This creates a new field called \"whisper_admin\" on your #{user_class} model's table.\n")
+        output += step("whisper's migrations were copied over into db/migrate.\n")
         output += step("A new method called `whisper_user` was inserted into your ApplicationController.
-   This lets Whisper know what the current user of your application is.\n")
+   This lets whisper know what the current user of your application is.\n")
         output += step("A new file was created at config/initializers/whisper.rb
-   This is where you put Whisper's configuration settings.\n")
+   This is where you put whisper's configuration settings.\n")
 
         unless options["no-migrate"]
 output += step("`rake db:migrate` was run, running all the migrations against your database.\n")
@@ -100,18 +98,18 @@ output += step("`rake db:migrate` was run, running all the migrations against yo
    If you want to change where the whisper is located, just change the \"/whisper\" path at the end of this line to whatever you want.")
         output += %Q{\nAnd finally:
 
-#{step("We told you that Whisper has been successfully installed and walked you through the steps.")}}
+#{step("We told you that whisper has been successfully installed and walked you through the steps.")}}
         unless defined?(Devise)
           output += %Q{We have detected you're not using Devise (which is OK with us, really!), so there's one extra step you'll need to do.
 
-   You'll need to define a "sign_in_path" method for Whisper to use that points to the sign in path for your application. You can set Whisper.sign_in_path to a String inside config/initializers/whisper.rb to do this, or you can define it in your config/routes.rb file with a line like this:
+   You'll need to define a "sign_in_path" method for whisper to use that points to the sign in path for your application. You can set Whisper.sign_in_path to a String inside config/initializers/whisper.rb to do this, or you can define it in your config/routes.rb file with a line like this:
 
           get '/users/sign_in', :to => "users#sign_in"
 
-          Either way, Whisper needs one of these two things in order to work properly. Please define them!}
+          Either way, whisper needs one of these two things in order to work properly. Please define them!}
         end
         # output += "\nIf you have any questions, comments or issues, please post them on our issues page: http://github.com/radar/whisper/issues.\n\n"
-        output += "Thanks for using Whisper!"
+        output += "Thanks for using whisper!"
         puts output
       end
 
