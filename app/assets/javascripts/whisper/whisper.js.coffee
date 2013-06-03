@@ -1,3 +1,5 @@
+//= require_tree .
+
 Pusher.channel_auth_endpoint = '/whisper/pusher/auth';
 pusher = new Pusher("e77c8d27f667516177f3", { encrypted: true })
 presenceChannel = pusher.subscribe("presence-channel")

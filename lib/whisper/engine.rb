@@ -12,5 +12,11 @@ module Whisper
       config.action_view.javascript_expansions[:defaults] = %w(jquery rails jquery-ui jquery-ujs whisper)
     end
 
+    config.generators do |g|
+      g.test_framework  :rspec, :view_specs => false
+      g.template_engine :haml
+      g.orm             :active_record
+    end
+
   end
 end

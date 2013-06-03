@@ -9,7 +9,7 @@ module Whisper
     def send_message
       if params[:message].present? && whisper_user
         # insert chat row into db
-        from    = whisper_user.username
+        from    = whisper_user.name
         to      = "*"
         message = params[:message]
         sent_at = Time.now
@@ -23,7 +23,7 @@ module Whisper
 
           if to_user.nil?
             #send message to oneself saying username does not exist
-            Pusher['private-user-channel-' + whisper_user.id.to_s].trigger('send-user-message', {:message => "#{to} does not exist.", :from => from, :to => from})
+            Pusher['private-user-channel-' + whisper_user.id.to_s].trigger('send-user-message', {:message => "sorry, the user #{to} does not exist, please make sure you whisper an existing username. Thanks :)", :from => from, :to => whisper_user.username})
             head :unprocessable_entity
           else
             #whisper
