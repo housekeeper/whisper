@@ -96,6 +96,14 @@
 	color: #9E1B32;
 }
 
+.chatboxmessagecontent_team {
+	color: #0CFF65;
+}
+
+.chatboxmessagecontent_error {
+	color: #ff3000;
+}
+
 .chatboxoptions {
 	float: right;
 }

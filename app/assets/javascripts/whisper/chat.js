@@ -204,12 +204,22 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 				dataType: 'script',
 
 				success: function(data) {
-					if (message.slice(0,1) == "/") { // whisper
-						to = message.split(" ")[0].slice(1);
+					if (message.slice(0,1) == "/") { // whisper or team
+            var klass = "whisper";
+            var msg   = "whispered to ";
+
+            to = message.split(" ")[0].slice(1);
+
+            // checking if it is a team message
+            if (to === "team" > -1) {
+              klass = "team";
+              msg   = "";
+            }
 						message = message.split(" ").slice(1).join(" ");
 						$("#chatbox_" + chatboxtitle + " .chatboxcontent")
-						  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + chatboxtitle + ' <em>whispered to ' + to + '</em>: </span><span class="chatboxmessagecontent_whisper">' + message + '</span></div>');
+						  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + chatboxtitle + ' <em>' + msg + to + '</em>: </span><span class="chatboxmessagecontent_' + klass + '">' + message + '</span></div>');
 					}
+
 					$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
 				}
 			});
