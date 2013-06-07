@@ -7,30 +7,23 @@ module Whisper
     end
 
     def send_message
-      if params[:message].present? && whisper_user
+      if params[:message].present? && whisper_user && params[:team].present?
+
         # insert chat row into db
-        from    = whisper_user.username
+        from    = whisper_user.username.downcase
         to      = "*"
         message = params[:message]
         sent_at = Time.now
 
+
         # whisper
-        # ex: /housekeeping so you spin this coming friday?
+        # ex: /carlb so you spin this coming friday?
         if message.start_with?("/")
-          to = message.split(' ')[0][1..-1]
-          to_user = User.where("lower(username) = ? OR username = ?", to.downcase, to).first
+          to = message.split(' ')[0][1..-1].downcase
+          to_user = User.where("lower(username) = ?", to).first
           message = message.split(' ')[1..-1].join(' ')
 
-          if to.eql?("team")
-            # team
-            if !whisper_user.team.nil?
-              Pusher['private-team-channel-' + whisper_user.team.id.to_s].trigger('send-team-message', {:message => message, :from => from, :to => whisper_user.team.name})
-              head :ok
-            else
-              Pusher['private-team-channel-' + whisper_user.id.to_s].trigger('send-team-message', {:message => "join a team first!", :from => from, :to => from})
-              head :unprocessable_entity
-            end
-          elsif to_user.nil?
+          if to_user.nil?
             # user does not exist
             Pusher['private-user-channel-' + whisper_user.id.to_s].trigger('send-user-message', {:message => "#{to} does not exist", :from => from, :to => from})
             head :unprocessable_entity
@@ -39,8 +32,19 @@ module Whisper
             Pusher['private-user-channel-' + to_user.id.to_s].trigger('send-user-message', {:message => message, :from => from, :to => to})
             head :ok
           end
+
+        # team
+        elsif params[:team].eql?("true")
+          if !whisper_user.team.nil?
+            Pusher['private-team-channel-' + whisper_user.team.id.to_s].trigger('send-team-message', {:message => message, :from => from, :to => whisper_user.team.name})
+            head :ok
+          else
+            Pusher['private-user-channel-' + whisper_user.id.to_s].trigger('send-user-message', {:message => "join a team first!", :from => from, :to => from})
+            head :unprocessable_entity
+          end
+
+        # broadcast
         else
-          # broadcast
           Pusher['presence-channel'].trigger('send-message', {:message => message, :from => from})
           head :ok
         end

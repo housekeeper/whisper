@@ -190,8 +190,10 @@ function toggleChatBoxGrowth(chatboxtitle) {
 function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 
 	if(event.keyCode == 13 && event.shiftKey == 0 && $(chatboxtextarea).val() != '')  {
+
 		var message = $(chatboxtextarea).val().replace(/^\s+|\s+$/g,"");
-		var to = "";
+		var to   = "";
+    var team = chatboxtitle === "team" ? true : false;
 
 		$(chatboxtextarea).val('');
 		$(chatboxtextarea).focus();
@@ -200,22 +202,17 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 			$.ajax({
 				url: 'whisper/chat/send_message',
 				type: 'POST',
-				data: { message : message },
+				data: { message : message, team : team },
 				dataType: 'script',
 
 				success: function(data) {
-					if (message.slice(0,1) == "/") { // whisper or team
+					if (message.slice(0,1) == "/") { // whisper
             var klass = "whisper";
             var msg   = "whispered to ";
 
             to = message.split(" ")[0].slice(1);
-
-            // checking if it is a team message
-            if (to === "team" > -1) {
-              klass = "team";
-              msg   = "";
-            }
 						message = message.split(" ").slice(1).join(" ");
+
 						$("#chatbox_" + chatboxtitle + " .chatboxcontent")
 						  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + chatboxtitle + ' <em>' + msg + to + '</em>: </span><span class="chatboxmessagecontent_' + klass + '">' + message + '</span></div>');
 					}

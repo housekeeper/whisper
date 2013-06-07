@@ -5,7 +5,7 @@ pusher = new Pusher("e77c8d27f667516177f3", { encrypted: true })
 presenceChannel = pusher.subscribe("presence-channel")
 
 presenceChannel.bind "send-message", (data) ->
-  $(".chatboxcontent").append "<div class='chatboxmessage'><span class='chatboxmessagefrom'>" + data.from + ": </span><span class='chatboxmessagecontent'>" + data.message + "</span></div>"
+  $(".chatbox:not(#chatbox_team)").children(".chatboxcontent").append "<div class='chatboxmessage'><span class='chatboxmessagefrom'>" + data.from + ": </span><span class='chatboxmessagecontent'>" + data.message + "</span></div>"
   console.log "An event was triggered with message: " + data.message
 
 ## debug
