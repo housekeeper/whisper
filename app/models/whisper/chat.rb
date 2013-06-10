@@ -6,6 +6,11 @@ module Whisper
 
     before_save :set_user
 
+    scope :today_for_user, lambda { |user_id|
+      where(:user_id => user_id).
+      where(:sent_at => Time.now.midnight..Time.now.midnight+1.day)
+
+    }
 
     def self.create_row(from, to, message, sent_at)
       Chat.create(:from    => from,
