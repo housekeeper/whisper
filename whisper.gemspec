@@ -18,6 +18,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~> 3.2.8"
   s.add_dependency "pusher"
+  s.add_dependency "private_pub"
   s.add_dependency "jquery-rails"
 
 end

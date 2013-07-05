@@ -1,6 +1,6 @@
 Whisper::Engine.routes.draw do
 
   post 'pusher/auth'
-  match 'chat/send_message' => 'chat#send_message'
+  match 'chats/send_message' => 'chats#send_message'
 
 end

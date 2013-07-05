@@ -200,12 +200,15 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		$(chatboxtextarea).css('height','44px');
 		if (message != '') {
 			$.ajax({
-				url: 'whisper/chat/send_message',
+				url: 'whisper/chats/send_message',
 				type: 'POST',
 				data: { message : message, team : team },
 				dataType: 'script',
 
 				success: function(data) {
+
+          var message = data.message;
+
 					if (message.slice(0,1) == "/") { // whisper
             var klass = "whisper";
             var msg   = "whispered to ";
@@ -213,11 +216,11 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
             to = message.split(" ")[0].slice(1);
 						message = message.split(" ").slice(1).join(" ");
 
-						$("#chatbox_" + chatboxtitle + " .chatboxcontent")
-						  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + chatboxtitle + ' <em>' + msg + to + '</em>: </span><span class="chatboxmessagecontent_' + klass + '">' + message + '</span></div>');
+						$("#chatbox_" + data.from + " .chatboxcontent")
+						  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + data.from + ' <em>' + msg + to + '</em>: </span><span class="chatboxmessagecontent_' + klass + '">' + data.message + '</span></div>');
 					}
 
-					$("#chatbox_"+chatboxtitle+" .chatboxcontent").scrollTop($("#chatbox_"+chatboxtitle+" .chatboxcontent")[0].scrollHeight);
+					$("#chatbox_" + data.from + " .chatboxcontent").scrollTop($("#chatbox_" + data.from + " .chatboxcontent")[0].scrollHeight);
 				}
 			});
 		}
