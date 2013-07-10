@@ -6,6 +6,11 @@ module Whisper
 
     end
 
+    def create
+      @message = Chat.create!(params[:message])
+      PrivatePub.publish_to("/chats/new", message: @message)
+    end
+
     def send_message
       if params[:message].present? && whisper_user && params[:team].present?
 

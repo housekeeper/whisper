@@ -52,9 +52,9 @@ function restructureChatBoxes() {
 
 		if ($("#chatbox_"+chatboxtitle).css('display') != 'none') {
 			if (align == 0) {
-				$("#chatbox_"+chatboxtitle).css('right', '20px');
+				$("#chatbox_"+chatboxtitle).css('right', '60px');
 			} else {
-				width = (align)*(225+7)+20;
+				width = (align)*(225+7)+60;
 				$("#chatbox_"+chatboxtitle).css('right', width+'px');
 			}
 			align++;
@@ -94,9 +94,9 @@ function createChatBox(chatboxtitle,minimizeChatBox) {
 	}
 
 	if (chatBoxeslength == 0) {
-		$("#chatbox_"+chatboxtitle).css('right', '20px');
+		$("#chatbox_"+chatboxtitle).css('right', '60px');
 	} else {
-		width = (chatBoxeslength)*(225+7)+20;
+		width = (chatBoxeslength)*(225+7)+60;
 		$("#chatbox_"+chatboxtitle).css('right', width+'px');
 	}
 	
@@ -140,6 +140,7 @@ function createChatBox(chatboxtitle,minimizeChatBox) {
 	});
 
 	$("#chatbox_"+chatboxtitle).show();
+  toggleChatBoxGrowth(chatboxtitle);
 }
 
 function closeChatBox(chatboxtitle) {
