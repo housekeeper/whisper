@@ -1,5 +1,3 @@
 <% publish_to "/chats/new" do %>
-  $("#chatbox_lewa").children(".chatboxcontent").append("<%= j render(@chat) %>");
-  $("#chatbox_davida").children(".chatboxcontent").append("<%= j render(@chat) %>");
+  $("#chatbox").children(".chatboxcontent").append("<%= j render(@chat) %>");
 <% end %>
-
