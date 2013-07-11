@@ -64,23 +64,23 @@ function restructureChatBoxes() {
 
 function chatWith(chatuser) {
 	createChatBox(chatuser);
-	$("#chatbox_"+chatuser+" .chatboxtextarea").focus();
+	$("#chatbox_" + chatuser + " .chatboxtextarea").focus();
 }
 
-function createChatBox(chatboxtitle,minimizeChatBox) {
-	if ($("#chatbox_"+chatboxtitle).length > 0) {
-		if ($("#chatbox_"+chatboxtitle).css('display') == 'none') {
-			$("#chatbox_"+chatboxtitle).css('display','block');
+function createChatBox(chatboxtitle, minimizeChatBox) {
+	if ($("#chatbox_" + chatboxtitle).length > 0) {
+		if ($("#chatbox_" + chatboxtitle).css('display') == 'none') {
+			$("#chatbox_" + chatboxtitle).css('display','block');
 			restructureChatBoxes();
 		}
-		$("#chatbox_"+chatboxtitle+" .chatboxtextarea").focus();
+		$("#chatbox_" + chatboxtitle + " .chatboxtextarea").focus();
 		return;
 	}
 
-	$(" <div />" ).attr("id","chatbox_"+chatboxtitle)
+	$(" <div />" ).attr("id","chatbox_" + chatboxtitle)
 	.addClass("chatbox")
   // .html('<div class="chatboxhead"><div class="chatboxtitle">'+chatboxtitle+'</div><div class="chatboxoptions"><a href="javascript:void(0);" onclick="javascript:toggleChatBoxGrowth(\''+chatboxtitle+'\')"><i class="icon-minus icon-white"></i></a> <a href="javascript:void(0);" onclick="javascript:closeChatBox(\''+chatboxtitle+'\')"><i class="icon-remove icon-white"></i></a></div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" onkeydown="javascript:return checkChatBoxInputKey(event,this,\''+chatboxtitle+'\');"></textarea></div>')
-  .html('<div class="chatboxhead"><div class="chatboxtitle">'+chatboxtitle+'</div><div class="chatboxoptions"><a href="javascript:void(0);" onclick="javascript:toggleChatBoxGrowth(\''+chatboxtitle+'\')"><i class="icon-minus icon-white"></i></a> </div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" onkeydown="javascript:return checkChatBoxInputKey(event,this,\''+chatboxtitle+'\');"></textarea></div>')
+  .html('<div class="chatboxhead"><div class="chatboxtitle">Chat</div><div class="chatboxoptions"><a href="javascript:void(0);" onclick="javascript:toggleChatBoxGrowth(\''+chatboxtitle+'\')"><i class="icon-minus icon-white"></i></a> </div><br clear="all"/></div><div class="chatboxcontent"></div><div class="chatboxinput"><textarea class="chatboxtextarea" onkeydown="javascript:return checkChatBoxInputKey(event,this,\''+chatboxtitle+'\');"></textarea></div>')
 	.appendTo($( "body" ));
 			   
 	$("#chatbox_"+chatboxtitle).css('bottom', '0px');
@@ -194,7 +194,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 
 		var message = $(chatboxtextarea).val().replace(/^\s+|\s+$/g,"");
 		var to   = "";
-    var team = chatboxtitle === "team" ? true : false;
+    var from = chatboxtitle;
 
 		$(chatboxtextarea).val('');
 		$(chatboxtextarea).focus();
@@ -203,7 +203,7 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 			$.ajax({
 				url: 'whisper/chats/send_message',
 				type: 'POST',
-				data: { message : message, team : team },
+				data: { message : message, from : from },
 				dataType: 'script',
 
 				success: function(data) {

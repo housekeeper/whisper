@@ -7,12 +7,11 @@ module Whisper
     end
 
     def send_message
-      if params[:message].present? && whisper_user # && params[:team].present?
-
+      if params[:message].present? && params[:from].present?
 
         # insert chat row into db
         message = params[:message]
-        from    = whisper_user.username.downcase
+        from    = params[:from].downcase
         to      = message.start_with?("/") ? message.split(' ')[0][1..-1].downcase : "*"
         sent_at = Time.now
         user_id = whisper_user.id
