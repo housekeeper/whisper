@@ -1,0 +1,18 @@
+- case @channel
+- when "broadcast"
+  - publish_to "/chats" do
+    $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
+
+- when "team"
+  - publish_to "/chats/teams/team_#{@team}" do
+    $('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
+
+- when "whisper"
+  - publish_to "/chats/users/user_#{@to}" do
+    $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
+  - publish_to "/chats/users/user_#{current_user.id}" do
+    $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
+
+- when "self"
+  - publish_to "/chats/users/user_#{current_user.id}" do
+    $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");

@@ -3,12 +3,6 @@
 
 Whisper allows you to chat with users within an existing application.
 
-
-## Requirements
-
-This gem uses Pusher for realtime messages and Devise for user authentication.
-Please see http://www.pusher.com and create an account (it is free).
-
 ## Installation for Rails 3.1 and above
 
 Add the gem to your Gemfile
@@ -30,9 +24,7 @@ rails g whisper:install
 In application.js add the following (I personally use coffescript)
 
 ``` javascript
-//= require whisper/pusher.min
 //= require whisper/whisper
-//= require whisper/chat
 ```
 
 In application.css add the following (I use sass notation here)

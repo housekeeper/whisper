@@ -50,7 +50,7 @@ function restructureChatBoxes() {
 	for (x in chatBoxes) {
 		chatboxtitle = chatBoxes[x];
 
-		if ($("#chatbox_"+chatboxtitle).css('display') != 'none') {
+		if ($("#chatbox"+chatboxtitle).css('display') != 'none') {
 			if (align == 0) {
 				$("#chatbox_"+chatboxtitle).css('right', '60px');
 			} else {
@@ -199,29 +199,28 @@ function checkChatBoxInputKey(event,chatboxtextarea,chatboxtitle) {
 		$(chatboxtextarea).val('');
 		$(chatboxtextarea).focus();
 		$(chatboxtextarea).css('height','44px');
-		if (message != '') {
+		if ($.trim(message) != "") {
 			$.ajax({
 				url: 'whisper/chats/send_message',
 				type: 'POST',
 				data: { message : message, from : from },
-				dataType: 'script',
+				dataType: 'json',
 
-				success: function(data) {
+				success: function(data, textStatus, jqXHR) {
+          // var message = data.message;
 
-          var message = data.message;
+					// if (message.slice(0,1) == "/") { // whisper
+     //        var klass = "whisper";
+     //        var msg   = "whispered to ";
 
-					if (message.slice(0,1) == "/") { // whisper
-            var klass = "whisper";
-            var msg   = "whispered to ";
+     //        to = message.split(" ")[0].slice(1);
+					// 	message = message.split(" ").slice(1).join(" ");
 
-            to = message.split(" ")[0].slice(1);
-						message = message.split(" ").slice(1).join(" ");
+					// 	$("#chatbox_" + data.from + " .chatboxcontent")
+					// 	  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + data.from + ' <em>' + msg + to + '</em>: </span><span class="chatboxmessagecontent_' + klass + '">' + data.message + '</span></div>');
+					// }
 
-						$("#chatbox_" + data.from + " .chatboxcontent")
-						  .append('<div class="chatboxmessage"><span class="chatboxmessagefrom">' + data.from + ' <em>' + msg + to + '</em>: </span><span class="chatboxmessagecontent_' + klass + '">' + data.message + '</span></div>');
-					}
-
-					$("#chatbox_" + data.from + " .chatboxcontent").scrollTop($("#chatbox_" + data.from + " .chatboxcontent")[0].scrollHeight);
+					// $("#chatbox_" + data.from + " .chatboxcontent").scrollTop($("#chatbox_" + data.from + " .chatboxcontent")[0].scrollHeight);
 				}
 			});
 		}

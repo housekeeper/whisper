@@ -1,8 +1,11 @@
-= subscribe_to "/chats/new"
+= subscribe_to "/chats"
+
+= subscribe_to "/chats/users/user_#{current_user.id}"
+
+- if current_user.team
+  = subscribe_to "/chats/teams/team_#{current_user.team.id}"
+
 
 :javascript
-
-  console.log("IN HELPER");
-
   chatWith("#{current_user.username.downcase}");
   chatWith("team");
