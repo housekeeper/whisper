@@ -16,40 +16,58 @@ module Whisper
         user_id = whisper_user.id
         @chat   = Chat.create_row(user_id, from, to, message, sent_at)
 
-        respond_to do |format|
-          # whisper
+        case 
+
+        # TEAM
+        when params[:from].eql?("team")
+
+          # TEAM_WHISPER
           if params[:message].start_with?("/")
             to_user = User.where("lower(username) = ?", to).first
-
             if to_user
-              # whisper
-              @channel = "whisper"
+              # OK
+              @channel = "team_whisper"
               @to = to_user.id
-              format.js
             else
-              # user does not exist
-              @channel = "self"
-              format.js
+              # KO
+              @channel = "team_self"
             end
 
-          # team
-          elsif params[:from].eql?("team")
-            if whisper_user.team
-              @channel = "team"
-              @team = whisper_user.team.id
-              format.js
-            else
-              @channel = "self"
-              format.js
-            end
-
-          # broadcast
+          # TEAMCAST
           else
-            @channel = "broadcast"
-            format.js
-          end
-        end
 
+            @channel = "team"
+            if whisper_user.team
+              # OK
+              @to = whisper_user.team.id
+            else
+              # KO
+              @channel = "team_self"
+            end
+          end
+
+        # WHISPER
+        when params[:message].start_with?("/")
+          to_user = User.where("lower(username) = ?", to).first
+          if to_user
+            # OK
+            @channel = "whisper"
+            @to = to_user.id
+          else
+            # KO
+            @channel = "whisper_self"
+          end
+
+        # BROADCAST
+        else
+          # OK
+          @channel = "broadcast"
+
+        end             
+
+        respond_to do |format|
+          format.js
+        end
       end
     end
 
