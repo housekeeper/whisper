@@ -1,6 +1,10 @@
 %br
 %span.sent_at
-  = "[#{chat.sent_at.strftime('%H:%M:%S')}] "
+  = "#{chat.sent_at.strftime('%H:%M')} "
   = "#{chat.from}"
+
+  - if @channel.include?("whisper")
+    %i
+      = "whispered to #{@to_user.username.downcase} "
 
 = chat.message

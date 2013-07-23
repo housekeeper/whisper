@@ -23,11 +23,11 @@ module Whisper
 
           # TEAM_WHISPER
           if params[:message].start_with?("/")
-            to_user = User.where("lower(username) = ?", to).first
-            if to_user
+            @to_user = User.where("lower(username) = ?", to).first
+            if @to_user
               # OK
               @channel = "team_whisper"
-              @to = to_user.id
+              @to = @to_user.id
             else
               # KO
               @channel = "team_self"
@@ -48,11 +48,11 @@ module Whisper
 
         # WHISPER
         when params[:message].start_with?("/")
-          to_user = User.where("lower(username) = ?", to).first
-          if to_user
+          @to_user = User.where("lower(username) = ?", to).first
+          if @to_user
             # OK
             @channel = "whisper"
-            @to = to_user.id
+            @to = @to_user.id
           else
             # KO
             @channel = "whisper_self"
