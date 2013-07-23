@@ -6,8 +6,9 @@
 - when "team_whisper"
   - publish_to "/chats/users/user_#{@to}" do
     $('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
-  - publish_to "/chats/users/user_#{current_user.id}" do
-    $('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
+  - if @to != current_user.id
+    - publish_to "/chats/users/user_#{current_user.id}" do
+      $('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
 
 
 - when "team"
@@ -21,8 +22,10 @@
 - when "whisper"
   - publish_to "/chats/users/user_#{@to}" do
     $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
-  - publish_to "/chats/users/user_#{current_user.id}" do
-    $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
+  
+  - if @to != current_user.id
+    - publish_to "/chats/users/user_#{current_user.id}" do
+      $('.chatbox').not('#chatbox_team').children(".chatboxcontent").append("#{j render(@chat)}");
 
 - when "whisper_self"
   - publish_to "/chats/users/user_#{current_user.id}" do
